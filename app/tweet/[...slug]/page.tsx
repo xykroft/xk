@@ -6,10 +6,9 @@ import { Tweet } from "react-tweet/api";
 import { TweetType, tweets } from "../../zdb";
 import { InfoIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useRef } from "react";
+import { Button } from "@/components/ui/button";
 
 const TweetSlugPage = ({ params }: { params: { slug: string } }) => {
-  const tweetRef = useRef<HTMLDivElement | null>(null);
   const tweet = tweets.find(
     (tweet) => tweet.tweetId === params.slug.toString()
   );
@@ -21,9 +20,8 @@ const TweetSlugPage = ({ params }: { params: { slug: string } }) => {
   return (
     <div className="mx-auto min-h-screen w-full">
       <div className="fixed bottom-0 left-0 right-[450px] top-0 mx-auto flex min-h-screen w-full max-w-[calc(100vw-450px)] flex-col overflow-scroll px-4 sm:px-8">
-        <div className="m-0 flex h-full w-full flex-1 items-center justify-center">
+        <div className="min-h-auto flex w-full flex-1 items-center justify-center py-16">
           <CustomTweet
-            ref={tweetRef}
             className="max-w-lg"
             tweetJson={(tweet as TweetType).tweetJson as Tweet}
             shouldShowCustomElements={false}
@@ -36,6 +34,14 @@ const TweetSlugPage = ({ params }: { params: { slug: string } }) => {
             <InfoIcon className="size-[18px]" />
             <span className="block font-medium">Info</span>
           </div>
+          <Button
+            className="h-[36px] w-auto border px-3 shadow-sm"
+            variant="secondary"
+          >
+            <span className="block text-[13px] leading-5">
+              Save Updated State To File
+            </span>
+          </Button>
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
