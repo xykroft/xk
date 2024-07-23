@@ -13,9 +13,18 @@ const fontMono = FontMono({
   variable: "--font-mono",
 });
 
+const getBaseUrl = () => {
+  return new URL(
+    process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : `http://localhost:${process.env.PORT || 3000}`
+  );
+};
+
 export const metadata = {
   title: "xykroft",
   description: "designs, prototypes, experiments— craft.",
+  metadataBase: getBaseUrl(),
 };
 
 export default function RootLayout({

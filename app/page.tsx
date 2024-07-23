@@ -1,7 +1,10 @@
+import { MainNav } from "@/components/main-nav";
+
 export default function Home() {
   return (
-    <main>
-      <p className="font-medium">Default template removed.</p>
-    </main>
+    <div className="mx-auto min-h-screen w-full">
+      <MainNav />
+      <div className="mx-auto min-h-[calc(100vh-64px)] w-full max-w-[2000px] px-4 pb-12 pt-1"></div>
+    </div>
   );
 }
