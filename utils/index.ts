@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { WriteFileType } from "@/app/api/write-file/route";
 
 // from https://github.com/shadcn/ui/blob/main/templates/next-template/lib/utils.ts
 export function cn(...inputs: ClassValue[]) {
@@ -20,6 +21,22 @@ export async function fetchTweet(tweetId: string): Promise<object> {
     .catch((error) => {
       handleAxiosError(error);
       return { type: "error", message: "tweet not found" };
+    });
+}
+
+export async function writeFileAtKey({
+  fileKey,
+  content,
+  shouldOverwrite,
+}: WriteFileType) {
+  return await axios
+    .post(`/api/write-file`, { fileKey, content, shouldOverwrite })
+    .then((response) => {
+      // console.log(JSON.stringify(response.data, null, 2));
+      return response.data;
+    })
+    .catch((error) => {
+      handleAxiosError(error);
     });
 }
 
