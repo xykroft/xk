@@ -1,14 +1,20 @@
 "use client";
 
 import { notFound } from "next/navigation";
-import { CustomTweet } from "@/components/custom-tweet";
-import { Tweet } from "react-tweet/api";
-import { TweetType, tweets } from "../../zdb";
+import { useTweetStore } from "@/app/store";
+import { type Tweet } from "react-tweet/api";
+import { type TweetType } from "../../zdb";
 import { InfoIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { CustomTweet } from "@/components/custom-tweet";
 
-const TweetSlugPage = ({ params }: { params: { slug: string } }) => {
+export default function TweetSlugPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const tweets = useTweetStore((state) => state.tweets);
   const tweet = tweets.find(
     (tweet) => tweet.tweetId === params.slug.toString()
   );
@@ -62,6 +68,4 @@ const TweetSlugPage = ({ params }: { params: { slug: string } }) => {
       </div>
     </div>
   );
-};
-
-export default TweetSlugPage;
+}
