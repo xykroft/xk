@@ -3,6 +3,7 @@ import { ThemeToggle } from "./theme-toggle";
 import {
   AddTweetButton,
   ClearLocalStorageTweetStoreButton,
+  SaveUpdatedStateToFileButton,
 } from "./nav-components";
 
 export function MainNav() {
@@ -16,6 +17,9 @@ export function MainNav() {
           @xykroft
         </Link>
         <div className="flex flex-wrap items-center gap-2">
+          {process.env.NODE_ENV === "development" && (
+            <SaveUpdatedStateToFileButton />
+          )}
           {process.env.NODE_ENV === "development" && <AddTweetButton />}
           {process.env.NODE_ENV === "development" && (
             <ClearLocalStorageTweetStoreButton />

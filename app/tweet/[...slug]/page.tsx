@@ -6,8 +6,8 @@ import { type Tweet } from "react-tweet/api";
 import { type TweetType } from "../../zdb";
 import { InfoIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { CustomTweet } from "@/components/custom-tweet";
+import { SaveUpdatedStateToFileButton } from "@/components/nav-components";
 
 export default function TweetSlugPage({
   params,
@@ -40,14 +40,7 @@ export default function TweetSlugPage({
             <InfoIcon className="size-[18px]" />
             <span className="block font-medium">Info</span>
           </div>
-          <Button
-            className="h-[36px] w-auto border px-3 shadow-sm"
-            variant="secondary"
-          >
-            <span className="block text-[13px] leading-5">
-              Save Updated State To File
-            </span>
-          </Button>
+          <SaveUpdatedStateToFileButton />
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">

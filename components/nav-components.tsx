@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { AddTweetForm } from "@/app/add-tweet-form";
+import { useTweetStore, writeUpdatedStoreItemsToFile } from "@/app/store";
 import { XK_STORE_KEY } from "@/app/constants";
 import { cn } from "@/utils";
 
@@ -52,5 +53,25 @@ export const ClearLocalStorageTweetStoreButton = ({
         Clear localStorage Store
       </span>
     </Button>
+  );
+};
+
+export const SaveUpdatedStateToFileButton = () => {
+  const store = useTweetStore((state) => state);
+
+  return store.itemsToWriteToFile.length > 0 ? (
+    <Button
+      className="h-[36px] w-auto border px-3 shadow-sm"
+      variant="secondary"
+      onClick={() => {
+        writeUpdatedStoreItemsToFile({ store });
+      }}
+    >
+      <span className="block text-[13px] leading-5">
+        Save Updated State To File
+      </span>
+    </Button>
+  ) : (
+    <></>
   );
 };
