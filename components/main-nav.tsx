@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
+import { ClearLocalStorageTweetStoreButton } from "./nav-components";
 
 export function MainNav() {
   return (
@@ -12,6 +13,9 @@ export function MainNav() {
           @xykroft
         </Link>
         <div className="flex flex-wrap items-center gap-2">
+          {process.env.NODE_ENV === "development" && (
+            <ClearLocalStorageTweetStoreButton />
+          )}
           <ThemeToggle />
         </div>
       </div>
