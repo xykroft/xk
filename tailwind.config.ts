@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 const config: Config = {
   content: [
@@ -9,39 +11,31 @@ const config: Config = {
   ],
   darkMode: ["class"],
   theme: {
+    transitionProperty: {
+      colors: "color, background-color, text-decoration-color, fill, stroke",
+    },
     extend: {
       fontFamily: {
-        sans: [
-          "var(--font-inter)",
-          "ui-sans-serif",
-          "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Roboto",
-          "Helvetica Neue",
-          "Arial",
-          "Noto Sans",
-          "sans-serif",
-          "Apple Color Emoji",
-          "Segoe UI Emoji",
-          "Segoe UI Symbol",
-          "Noto Color Emoji",
-        ],
-        mono: [
-          "var(--font-sfMono)",
-          "ui-monospace",
-          "SFMono-Regular",
-          "Menlo",
-          "Monaco",
-          "Consolas",
-          "Liberation Mono",
-          "Courier New",
-          "monospace",
-        ],
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+        mono: ["var(--font-mono)", ...fontFamily.mono],
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
+  plugins: [tailwindcssAnimate],
 };
 
 export default config;
