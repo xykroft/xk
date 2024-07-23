@@ -1,9 +1,8 @@
 "use client";
 
-import { notFound } from "next/navigation";
 import { useTweetStore } from "@/app/store";
 import { type Tweet } from "react-tweet/api";
-import { type TweetType } from "../../zdb";
+import { tweets as zdbTweets, type TweetType } from "../../zdb";
 import { InfoIcon } from "lucide-react";
 import { CustomTweet } from "@/components/custom-tweet";
 import {
@@ -11,24 +10,50 @@ import {
   SaveUpdatedStateToFileButton,
 } from "@/components/nav-components";
 import TweetLinksForm from "./tweet-links-form";
+import { Icons } from "@/components/icons";
+import { useEffect, useState } from "react";
+import { NotFoundScreen } from "@/components/not-found-screen";
 
 export default function TweetSlugPage({
   params,
 }: {
   params: { slug: string };
 }) {
+  const [isLoading, setIsLoading] = useState(true);
   const tweets = useTweetStore((state) => state.tweets);
   const tweet = tweets.find(
     (tweet) => tweet.tweetId === params.slug.toString()
   );
-
-  if (!tweet) {
-    notFound();
-  }
+  const zdbTweet = zdbTweets.find(
+    (tweet) => tweet.tweetId === params.slug.toString()
+  );
 
   const itemsToWriteToFile = useTweetStore((state) => state.itemsToWriteToFile);
 
-  return (
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
+  if (process.env.NODE_ENV !== "development") {
+    return <NotFoundScreen />;
+  }
+
+  // if tweet is not in zdb (but may exist in client store) && is loading
+  if (!zdbTweet && isLoading) {
+    return (
+      <div className="absolute bottom-0 left-0 right-0 top-0 z-50 flex h-screen items-center justify-center bg-white dark:bg-neutral-950">
+        <div className="flex w-full flex-col items-center justify-center gap-2.5">
+          <Icons.spinner className="size-7" />
+          <span className="block text-sm text-neutral-400 dark:text-neutral-500">
+            Loading tweet...
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  // return tweet page if (client) tweet exists; otherwise, return 404 screen
+  return tweet ? (
     <div className="mx-auto min-h-screen w-full">
       <div className="fixed bottom-0 left-0 right-[450px] top-0 mx-auto flex min-h-screen w-full max-w-[calc(100vw-450px)] flex-col overflow-scroll px-4 sm:px-8">
         <div className="min-h-auto flex w-full flex-1 items-center justify-center py-16">
@@ -53,5 +78,7 @@ export default function TweetSlugPage({
         )}
       </div>
     </div>
+  ) : (
+    <NotFoundScreen />
   );
 }

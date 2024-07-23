@@ -2,6 +2,7 @@ import "./globals.scss";
 import { Providers } from "./providers";
 import { Inter as FontSans } from "next/font/google";
 import { JetBrains_Mono as FontMono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -36,6 +37,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${fontSans.variable} ${fontMono.variable} font-sans`}>
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );

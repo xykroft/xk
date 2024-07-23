@@ -19,7 +19,7 @@ export const PageTweets = () => {
       >
         designs, prototypes, experiments— <span className="italic">craft</span>.
       </span>
-      {tweets.length &&
+      {tweets.length ? (
         tweets
           .filter((tweet) => "tweetJson" in tweet)
           .map((tweet) => {
@@ -31,7 +31,10 @@ export const PageTweets = () => {
                 demoLink={tweet.demoLink}
               />
             );
-          })}
+          })
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
