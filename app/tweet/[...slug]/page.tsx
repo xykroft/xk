@@ -5,9 +5,12 @@ import { useTweetStore } from "@/app/store";
 import { type Tweet } from "react-tweet/api";
 import { type TweetType } from "../../zdb";
 import { InfoIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { CustomTweet } from "@/components/custom-tweet";
-import { SaveUpdatedStateToFileButton } from "@/components/nav-components";
+import {
+  ClearLocalStorageTweetStoreButton,
+  SaveUpdatedStateToFileButton,
+} from "@/components/nav-components";
+import TweetLinksForm from "./tweet-links-form";
 
 export default function TweetSlugPage({
   params,
@@ -22,6 +25,8 @@ export default function TweetSlugPage({
   if (!tweet) {
     notFound();
   }
+
+  const itemsToWriteToFile = useTweetStore((state) => state.itemsToWriteToFile);
 
   return (
     <div className="mx-auto min-h-screen w-full">
@@ -42,22 +47,10 @@ export default function TweetSlugPage({
           </div>
           <SaveUpdatedStateToFileButton />
         </div>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <span className="mb-0 block text-sm font-medium">Tweet Link</span>
-            <Input name="tweet-link" placeholder="Tweet Link" />
-          </div>
-          <div className="flex flex-col gap-2">
-            <span className="mb-0 block text-sm font-medium">Github Link</span>
-            <Input name="github-link" placeholder="Github Link" />
-          </div>
-          <div className="flex flex-col gap-2">
-            <span className="mb-0 block text-sm font-medium">
-              External Link
-            </span>
-            <Input name="external-link" placeholder="External Link" />
-          </div>
-        </div>
+        <TweetLinksForm tweet={tweet} />
+        {itemsToWriteToFile.length > 0 && (
+          <ClearLocalStorageTweetStoreButton className="h-10 w-full" />
+        )}
       </div>
     </div>
   );
